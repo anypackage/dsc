@@ -13,7 +13,7 @@
     DscResourcesToExport = @('Package', 'Source')
     PrivateData = @{
         PSData = @{
-            Tags = @('DesiredStateConfiguration', 'DSC', 'DSCResource', 'AnyPackage', 'Windows', 'Linux', 'MacOS')
+            Tags = @('DesiredStateConfiguration', 'DSC', 'DSCResource', 'AnyPackage', 'Windows')
             LicenseUri = 'https://github.com/AnyPackage/AnyPackageDsc/blob/main/LICENSE'
             ProjectUri = 'https://github.com/AnyPackage/AnyPackageDsc'
         }
