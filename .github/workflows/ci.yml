@@ -37,6 +37,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Install PSDesiredStateConfiguration
+        run: Install-Module PSDesiredStateConfiguration -Force -AllowClobber
+
       - name: Install AnyPackage
         run: Install-Module AnyPackage -Force -AllowClobber
 
