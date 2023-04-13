@@ -1,4 +1,4 @@
-# Copyright (c) Thomas Nieto - All Rights Reserved
+﻿# Copyright (c) Thomas Nieto - All Rights Reserved
 # You may use, distribute and modify this code under the
 # terms of the MIT license.
 
@@ -145,7 +145,7 @@ class Package {
             } else {
                 Install-Package @params @additionalParams
             }
-            
+
         } elseif ($currentState.Ensure -eq [Ensure]::Present) {
             Uninstall-Package @params
         }
@@ -184,7 +184,7 @@ class Source {
             Name     = $this.Name
             Provider = $this.Provider
         }
-        
+
         $params = @{
             Name        = $this.Name
             Provider    = $this.Provider
@@ -254,7 +254,7 @@ class Source {
             } else {
                 Register-PackageSource @params @additionalParams
             }
-            
+
         } elseif ($currentState.Ensure -eq [Ensure]::Present) {
             Unregister-PackageSource @params
         }
