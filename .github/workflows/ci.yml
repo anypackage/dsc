@@ -40,7 +40,7 @@ jobs:
       - name: Remove libmi.dylib
         if: runner.os == 'macOS'
         shell: bash
-        run: rm /usr/local/microsoft/powershell/7/libmi.dylib
+        run: sudo rm /usr/local/microsoft/powershell/7/libmi.dylib
 
       - name: Install PSWSMan
         if: runner.os != 'Windows'
