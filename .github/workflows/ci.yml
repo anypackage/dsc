@@ -50,6 +50,7 @@ jobs:
         run: Install-Module AnyPackage.PowerShellGet -Force -AllowClobber
 
       - name: Install PSWSMan
+      - if: runner.os != 'Windows'
         run: |
           if (Test-Path /usr/local/microsoft/powershell/7/libmi.dylib) {
             Remove-Item /usr/local/microsoft/powershell/7/libmi.dylib -Force
