@@ -46,6 +46,9 @@ jobs:
       - name: Install AnyPackage.PowerShellGet
         run: Install-Module AnyPackage.PowerShellGet -Force -AllowClobber
 
+      - name: Install PSWSMan
+        run: Install-Module PSWSMan -Force
+
       - name: Download module
         uses: actions/download-artifact@v3
         with:
@@ -64,6 +67,8 @@ jobs:
 
       - name: Test with Pester
         run: |
+          Import-Module PSWSMan
+
           $ht = Import-PowerShellDataFile PesterSettings.psd1
           $config = New-PesterConfiguration $ht
           Invoke-Pester -Configuration $config
