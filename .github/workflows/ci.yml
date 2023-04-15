@@ -51,7 +51,7 @@ jobs:
 
       - name: Install PSWSMan
         run: |
-          if (Test-Path rm /usr/local/microsoft/powershell/7/libmi.dylib.bak) {
+          if (Test-Path /usr/local/microsoft/powershell/7/libmi.dylib.bak) {
             rm /usr/local/microsoft/powershell/7/libmi.dylib.bak
           }
 
