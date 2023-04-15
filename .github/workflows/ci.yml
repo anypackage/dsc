@@ -51,8 +51,8 @@ jobs:
 
       - name: Install PSWSMan
         run: |
-          if (Test-Path /usr/local/microsoft/powershell/7/libmi.dylib.bak) {
-            sudo rm /usr/local/microsoft/powershell/7/libmi.dylib.bak
+          if (Test-Path /usr/local/microsoft/powershell/7/libmi.dylib) {
+            Remove-Item /usr/local/microsoft/powershell/7/libmi.dylib -Force
           }
 
           Install-Module PSWSMan -Force -AllowClobber; Install-WSMan -Verbose
