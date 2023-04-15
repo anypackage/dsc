@@ -37,6 +37,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Remove libmi.dylib
+        if: runner.os == 'macOS'
+        shell: bash
+        run: rm /usr/local/microsoft/powershell/7/libmi.dylib.bak
+
+      - name: Install PSWSMan
+        if: runner.os != 'Windows'
+        run: Install-Module PSWSMan -Force -AllowClobber; Install-WSMan -Verbose
+
       - name: Install PSDesiredStateConfiguration
         run: Install-Module PSDesiredStateConfiguration -Force -AllowClobber
 
@@ -48,15 +57,6 @@ jobs:
 
       - name: Install AnyPackage.PowerShellGet
         run: Install-Module AnyPackage.PowerShellGet -Force -AllowClobber
-
-      - name: Install PSWSMan
-        if: runner.os != 'Windows'
-        run: |
-          if (Test-Path /usr/local/microsoft/powershell/7/libmi.dylib) {
-            Remove-Item /usr/local/microsoft/powershell/7/libmi.dylib -Force
-          }
-
-          Install-Module PSWSMan -Force -AllowClobber; Install-WSMan -Verbose
 
       - name: Download module
         uses: actions/download-artifact@v3
