@@ -31,7 +31,7 @@ jobs:
     needs: Build
     strategy:
       matrix:
-          os: [macos-latest]
+          os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
@@ -39,12 +39,7 @@ jobs:
 
       - name: Install PSWSMan
         if: runner.os != 'Windows'
-        run: Install-Module PSWSMan -Force -AllowClobber
-
-      - name: Test
-        if: runner.os != 'Windows'
-        shell: sh
-        run: sudo pwsh -c { Install-WSMan -Verbose }
+        run: Install-Module PSWSMan -Force -AllowClobber; Install-WSMan
 
       - name: Install PSDesiredStateConfiguration
         run: Install-Module PSDesiredStateConfiguration -Force -AllowClobber
@@ -76,8 +71,6 @@ jobs:
 
       - name: Test with Pester
         run: |
-          Import-Module PSWSMan
-
           $ht = Import-PowerShellDataFile PesterSettings.psd1
           $config = New-PesterConfiguration $ht
           Invoke-Pester -Configuration $config
