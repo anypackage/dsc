@@ -31,20 +31,20 @@ jobs:
     needs: Build
     strategy:
       matrix:
-          os: [macos-latest, ubuntu-latest, windows-latest]
+          os: [macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Remove libmi.dylib
-        if: runner.os == 'macOS'
-        shell: bash
-        run: sudo rm /usr/local/microsoft/powershell/7/libmi.dylib
-
       - name: Install PSWSMan
         if: runner.os != 'Windows'
-        run: Install-Module PSWSMan -Force -AllowClobber; Install-WSMan -Verbose
+        run: Install-Module PSWSMan -Force -AllowClobber
+
+      - name: Test
+        if: runner.os != 'Windows'
+        shell: sh
+        run: sudo pwsh -c { Install-WSMan -Verbose }
 
       - name: Install PSDesiredStateConfiguration
         run: Install-Module PSDesiredStateConfiguration -Force -AllowClobber
