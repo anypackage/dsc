@@ -29,10 +29,17 @@ jobs:
 
   Test:
     needs: Build
-    runs-on: windows-latest
+    strategy:
+      matrix:
+          os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+
+      - name: Install PSWSMan
+        if: runner.os != 'Windows'
+        run: Install-Module PSWSMan -Force -AllowClobber; Install-WSMan
 
       - name: Install PSDesiredStateConfiguration
         run: Install-Module PSDesiredStateConfiguration -Force -AllowClobber
