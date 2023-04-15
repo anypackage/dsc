@@ -29,7 +29,10 @@ jobs:
 
   Test:
     needs: Build
-    runs-on: windows-latest
+    strategy:
+      matrix:
+          os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
