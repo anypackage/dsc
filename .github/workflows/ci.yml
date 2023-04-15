@@ -51,7 +51,7 @@ jobs:
 
       - name: Install PSWSMan
         run: |
-          Get-ChildItem /usr/local/microsoft/powershell/7
+          Get-Item /usr/local/microsoft/powershell/7/libmi* -EA 0
           Install-Module PSWSMan -Force -AllowClobber; Install-WSMan
 
       - name: Download module
