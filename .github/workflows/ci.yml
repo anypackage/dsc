@@ -50,7 +50,7 @@ jobs:
         run: Install-Module AnyPackage.PowerShellGet -Force -AllowClobber
 
       - name: Install PSWSMan
-        run: Install-Module PSWSMan -Force
+        run: Install-Module PSWSMan -Force -AllowClobber; Install-WSMan
 
       - name: Download module
         uses: actions/download-artifact@v3
