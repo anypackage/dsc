@@ -102,9 +102,11 @@ class Package {
             if ($this.Source) { $params['Source'] = $this.Source }
             $params['Prerelease'] = $this.Prerelease
 
-            $latestPackage = Find-Package @params
+            $latestPackage = Find-Package @params |
+                Sort-Object -Property Version -Descending |
+                Select-Object -First 1
 
-            if ($currentState.Version -ne $latestPackage.Version) {
+            if ($currentState.Version -lt $latestPackage.Version) {
                 $currentState.Reasons += [Reason]@{
                     Code   = 'Package:Package:Latest'
                     Phrase = "Version should be '$($latestPackage.Version) but was '$($currentState.Version)'."
