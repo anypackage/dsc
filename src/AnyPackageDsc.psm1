@@ -53,9 +53,12 @@ class Package {
 
         $params = @{
             Name        = $this.Name
-            Version     = $this.Version
             Provider    = $this.Provider
             ErrorAction = 'Stop'
+        }
+
+        if ($this.Version -ne '*') {
+            $params['Version'] = $this.Version
         }
 
         if (-not $this.Provider.Contains('\')) {
@@ -122,9 +125,12 @@ class Package {
 
         $params = @{
             Name        = $this.Name
-            Version     = $this.Version
             Provider    = $this.Provider
             ErrorAction = 'Stop'
+        }
+
+        if ($this.Version -ne '*') {
+            $params['Version'] = $this.Version
         }
 
         $currentState = $this.Get()
