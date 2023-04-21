@@ -10,7 +10,7 @@ enum Ensure {
     Present
 }
 
-class Reason {
+class APReason {
     [string] $Code
 
     [string] $Phrase
@@ -43,7 +43,7 @@ class Package {
     [Ensure] $Ensure = [Ensure]::Present
 
     [DscProperty(NotConfigurable)]
-    [Reason[]] $Reasons
+    [APReason[]] $Reasons
 
     [Package] Get() {
         $currentState = [Package]@{
@@ -78,21 +78,21 @@ class Package {
         }
 
         if ($this.Ensure -ne $currentState.Ensure) {
-            $currentState.Reasons += [Reason]@{
+            $currentState.Reasons += [APReason]@{
                 Code   = 'Package:Package:Ensure'
                 Phrase = "Package '$($this.Name)' should be '$($this.Ensure)' but was '$($currentState.Ensure)'."
             }
         }
 
         if ($this.Source -and $this.Source -ne $currentState.Source) {
-            $currentState.Reasons += [Reason]@{
+            $currentState.Reasons += [APReason]@{
                 Code   = 'Package:Package:Source'
                 Phrase = "Source should be '$($this.Source)' but was '$($currentState.Source)'."
             }
         }
 
         if (-not $this.Prerelease -and $this.Prerelease -ne $currentState.Prerelease) {
-            $currentState.Reasons += [Reason]@{
+            $currentState.Reasons += [APReason]@{
                 Code   = 'Package:Package:Prerelease'
                 Phrase = 'Prerelease versions not allowed.'
             }
@@ -107,7 +107,7 @@ class Package {
                 Select-Object -First 1
 
             if ($currentState.Version -lt $latestPackage.Version) {
-                $currentState.Reasons += [Reason]@{
+                $currentState.Reasons += [APReason]@{
                     Code   = 'Package:Package:Latest'
                     Phrase = "Version should be '$($latestPackage.Version) but was '$($currentState.Version)'."
                 }
@@ -179,7 +179,7 @@ class Source {
     [Ensure] $Ensure = [Ensure]::Present
 
     [DscProperty(NotConfigurable)]
-    [Reason[]] $Reasons
+    [APReason[]] $Reasons
 
     [Source] Get() {
         $currentState = [Source]@{
@@ -210,21 +210,21 @@ class Source {
         }
 
         if ($this.Ensure -ne $currentState.Ensure) {
-            $currentState.Reasons += [Reason]@{
+            $currentState.Reasons += [APReason]@{
                 Code   = 'Source:Source:Ensure'
                 Phrase = "Package source '$($this.Name)' should be '$($this.Ensure)' but was '$($currentState.Ensure)'."
             }
         }
 
         if ($this.Location -ne $currentState.Location) {
-            $currentState.Reasons += [Reason]@{
+            $currentState.Reasons += [APReason]@{
                 Code   = 'Source:Source:Location'
                 Phrase = "Location should be '$($this.Location)' but was '$($currentState.Location)'."
             }
         }
 
         if ($this.Trusted -ne $currentState.Trusted) {
-            $currentState.Reasons += [Reason]@{
+            $currentState.Reasons += [APReason]@{
                 Code   = 'Source:Source:Trusted'
                 Phrase = "Trusted should be '$($this.Trusted)' but was '$($currentState.Trusted)'."
             }
