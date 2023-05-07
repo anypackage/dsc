@@ -109,10 +109,10 @@ class Package {
                 Sort-Object -Property Version -Descending |
                 Select-Object -First 1
 
-            if ($currentState.Version -lt $latestPackage.Version) {
+            if ([PackageVersion]$currentState.Version -lt $latestPackage.Version) {
                 $currentState.Reasons += [APReason]@{
                     Code   = 'Package:Package:Latest'
-                    Phrase = "Version should be '$($latestPackage.Version) but was '$($currentState.Version)'."
+                    Phrase = "Version should be '$($latestPackage.Version)' but was '$($currentState.Version)'."
                 }
             }
         }
