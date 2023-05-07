@@ -34,7 +34,7 @@ class Package {
     [string] $Source
 
     [DscProperty()]
-    [hashtable] $AdditionalParameters
+    [hashtable] $AdditionalParameters = @{ }
 
     [DscProperty()]
     [bool] $Latest
@@ -179,7 +179,7 @@ class Source {
     [bool] $Trusted
 
     [DscProperty()]
-    [hashtable] $AdditionalParameters
+    [hashtable] $AdditionalParameters = @{ }
 
     [DscProperty()]
     [Ensure] $Ensure = [Ensure]::Present
