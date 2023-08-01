@@ -11,7 +11,6 @@
 [build-site]: https://github.com/anypackage/dsc/actions/workflows/ci.yml
 [cf-site]: https://www.codefactor.io/repository/github/anypackage/dsc
 
-
 AnyPackage DSC resources module.
 
 ## Install AnyPackageDsc
