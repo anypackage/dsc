@@ -1,5 +1,16 @@
 # AnyPackageDsc
 
+[![gallery-image]][gallery-site]
+[![build-image]][build-site]
+[![cf-image]][cf-site]
+
+[gallery-image]: https://img.shields.io/powershellgallery/dt/AnyPackageDsc
+[build-image]: https://img.shields.io/github/actions/workflow/status/anypackage/dsc/ci.yml
+[cf-image]: https://img.shields.io/codefactor/grade/github/anypackage/dsc
+[gallery-site]: https://www.powershellgallery.com/packages/AnyPackageDsc
+[build-site]: https://github.com/anypackage/dsc/actions/workflows/ci.yml
+[cf-site]: https://www.codefactor.io/repository/github/anypackage/dsc
+
 AnyPackage DSC resources module.
 
 ## Install AnyPackageDsc
