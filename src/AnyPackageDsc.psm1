@@ -45,6 +45,31 @@ class Package {
     [DscProperty(NotConfigurable)]
     [APReason[]] $Reasons
 
+    static [Package[]] Export() {
+        Get-PackageProvider -ListAvailable |
+        Select-Object -ExpandProperty ModuleName -Unique |
+        Import-Module
+
+        $packages = @()
+        foreach ($installedPackage in (Get-Package -ErrorAction Stop)) {
+            $package = [Package]::new()
+            $package.Name = $installedPackage.Name
+            $package.Provider = $installedPackage.Provider.FullName
+
+            if ($installedPackage.Version) {
+                $package.Version = $installedPackage.Version
+                $package.Prerelease = $installedPackage.Version.IsPrerelease
+            } else {
+                $package.Version = '*'
+            }
+
+            $package.Source = $installedPackage.Source
+            $packages += $package
+        }
+
+        return $packages
+    }
+
     [Package] Get() {
         $currentState = [Package]@{
             Name     = $this.Name
@@ -186,6 +211,24 @@ class Source {
 
     [DscProperty(NotConfigurable)]
     [APReason[]] $Reasons
+
+    static [Source[]] Export() {
+        Get-PackageProvider -ListAvailable |
+        Select-Object -ExpandProperty ModuleName -Unique |
+        Import-Module
+
+        $sources = @()
+        foreach ($installedSource in (Get-PackageSource -ErrorAction Stop)) {
+            $source = [Source]::new()
+            $source.Name = $installedSource.Name
+            $source.Provider = $installedSource.Provider.FullName
+            $source.Location = $installedSource.Location
+            $source.Trusted = $installedSource.Trusted
+            $sources += $source
+        }
+
+        return $sources
+    }
 
     [Source] Get() {
         $currentState = [Source]@{
