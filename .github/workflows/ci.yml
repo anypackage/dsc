@@ -39,19 +39,13 @@ jobs:
 
       - name: Install PSWSMan
         if: runner.os != 'Windows'
-        run: Install-Module PSWSMan -Force -AllowClobber; Install-WSMan
+        run: Install-PSResource PSWSMan -TrustRepository; Install-WSMan
 
       - name: Install PSDesiredStateConfiguration
-        run: Install-Module PSDesiredStateConfiguration -Force -AllowClobber
+        run: Install-PSResource PSDesiredStateConfiguration -TrustRepository
 
-      - name: Install AnyPackage
-        run: Install-Module AnyPackage -Force -AllowClobber
-
-      - name: Install PowerShellGet
-        run: Install-Module PowerShellGet -AllowPrerelease -Force -AllowClobber
-
-      - name: Install AnyPackage.PowerShellGet
-        run: Install-Module AnyPackage.PowerShellGet -Force -AllowClobber
+      - name: Install AnyPackage.PSResourceGet
+        run: Install-PSResource AnyPackage.PSResourceGet -TrustRepository
 
       - name: Download module
         uses: actions/download-artifact@v4
@@ -135,9 +129,11 @@ jobs:
           path: '~/.local/share/powershell/Modules/AnyPackageDsc'
 
       - name: Install AnyPackage
-        run: Install-Module AnyPackage -Force -AllowClobber
+        run: Install-PSResource AnyPackage -TrustRepository
 
       - name: Publish Module
         env:
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
-        run: Publish-Module -Name AnyPackageDsc -NuGetApiKey $env:NUGET_KEY
+        run: |
+          $module = Get-Module AnyPackageDsc -ListAvailable
+          Publish-PSResource $module.ModuleBase -ApiKey $env:NUGET_KEY

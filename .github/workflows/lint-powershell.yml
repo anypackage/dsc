@@ -27,17 +27,14 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install AnyPackage
-        run: Install-Module AnyPackage -Force -AllowClobber
+        run: Install-PSResource AnyPackage -TrustRepository
 
       - name: Install ConvertToSARIF
-        run: Install-Module ConvertToSARIF -Force
-
-      - name: Install PowerShellGet
-        run: Install-Module PowerShellGet -Force -AllowClobber -AllowPrerelease
+        run: Install-PSResource ConvertToSARIF -TrustRepository
 
       - name: Run PSScriptAnalyzer
         run: |
-          Import-Module AnyPackage, ConvertToSARIF, PowerShellGet -PassThru
+          Import-Module AnyPackage, ConvertToSARIF -PassThru
           Invoke-ScriptAnalyzer -Path . -Recurse | ConvertTo-SARIF -FilePath results.sarif
 
       - name: Upload SARIF results file

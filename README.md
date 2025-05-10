@@ -16,7 +16,7 @@ AnyPackage DSC resources module.
 ## Install AnyPackageDsc
 
 ```powershell
-Install-Module AnyPackageDsc
+Install-PSResource AnyPackageDsc
 ```
 
 ## Documentation
