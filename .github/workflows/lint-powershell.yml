@@ -36,6 +36,7 @@ jobs:
 
           Copy-Item src AnyPackageDsc
           Copy-Item AnyPackageDsc $path
+          Get-Module AnyPackageDsc -ListAvailable
 
       - name: Install AnyPackage
         run: Install-PSResource AnyPackage -TrustRepository
