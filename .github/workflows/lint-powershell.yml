@@ -24,7 +24,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Move module
+        run: |
+          if ($IsWindows) {
+            $path = "$HOME\Documents\PowerShell\Modules"
+          } else {
+            $path = "$HOME/.local/share/powershell/Modules"
+          }
+
+          Copy-Item src AnyPackageDsc
+          Copy-Item AnyPackageDsc $path
 
       - name: Install AnyPackage
         run: Install-PSResource AnyPackage -TrustRepository
@@ -38,6 +49,6 @@ jobs:
           Invoke-ScriptAnalyzer -Path . -Recurse | ConvertTo-SARIF -FilePath results.sarif
 
       - name: Upload SARIF results file
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: results.sarif
