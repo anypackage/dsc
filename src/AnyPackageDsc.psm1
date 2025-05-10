@@ -197,7 +197,7 @@ class Source {
     [DscProperty(Key)]
     [string] $Provider
 
-    [DscProperty(Mandatory)]
+    [DscProperty()]
     [string] $Location
 
     [DscProperty()]
@@ -265,7 +265,7 @@ class Source {
             }
         }
 
-        if ($this.Location -ne $currentState.Location) {
+        if ($this.Location -and $this.Location -ne $currentState.Location) {
             $currentState.Reasons += [APReason]@{
                 Code   = 'Source:Source:Location'
                 Phrase = "Location should be '$($this.Location)' but was '$($currentState.Location)'."
